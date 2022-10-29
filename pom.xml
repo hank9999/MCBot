@@ -16,7 +16,7 @@
         <maven.compiler.source>17</maven.compiler.source>
         <maven.compiler.target>17</maven.compiler.target>
         <kotlin.version>1.7.20</kotlin.version>
-        <serialization.version>1.4.0</serialization.version>
+        <serialization.version>1.4.1</serialization.version>
     </properties>
 
     <name>MCBot</name>
@@ -35,13 +35,13 @@
                             <goal>compile</goal>
                         </goals>
                     </execution>
-                    <execution>
-                        <id>test-compile</id>
-                        <phase>test-compile</phase>
-                        <goals>
-                            <goal>test-compile</goal>
-                        </goals>
-                    </execution>
+<!--                    <execution>-->
+<!--                        <id>test-compile</id>-->
+<!--                        <phase>test-compile</phase>-->
+<!--                        <goals>-->
+<!--                            <goal>test-compile</goal>-->
+<!--                        </goals>-->
+<!--                    </execution>-->
                 </executions>
                 <configuration>
                     <jvmTarget>11</jvmTarget>
@@ -178,12 +178,12 @@
         <dependency>
             <groupId>com.github.hank9999</groupId>
             <artifactId>kook-kt</artifactId>
-            <version>0.0.3-alpha-1</version>
+            <version>0.0.3</version>
         </dependency>
         <dependency>
             <groupId>io.javalin</groupId>
             <artifactId>javalin</artifactId>
-            <version>5.0.1</version>
+            <version>5.1.2</version>
         </dependency>
     </dependencies>
 </project>
