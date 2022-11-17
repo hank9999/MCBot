@@ -1,5 +1,8 @@
 package com.github.hank9999.mcbot.database.types
 
+import kotlinx.serialization.Serializable
+
+@Serializable
 data class Permission(
     val token: String,
     val admins: RoleOrUser = RoleOrUser(),

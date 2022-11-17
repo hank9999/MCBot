@@ -1,7 +1,10 @@
 package com.github.hank9999.mcbot.database.types
 
+import kotlinx.serialization.Serializable
+
 
 // -1 -> 未设置频道ID 不启用, 0 -> 启用在默认频道, 其他 -> 启用且在对应频道
+@Serializable
 data class Token(
     val token: String,
     var guild: String = "",
