@@ -26,6 +26,9 @@ class WebSocketServer {
     fun initialize(host: String, port: Int, path: String): Javalin {
         val app = Javalin.create { config ->
             config.showJavalinBanner = false
+            config.jetty.wsFactoryConfig {
+                it.maxTextMessageSize = 262144
+            }
             config.accessManager { handler, ctx, _ ->
                 val remoteIp = ctx.remoteIp()
                 val ctxPath = ctx.path()
