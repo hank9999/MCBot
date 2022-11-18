@@ -56,7 +56,7 @@ class Commands {
     @Bot.OnCommand("ping")
     suspend fun hello(msg: Message) {
         val netDelay = System.currentTimeMillis() - msg.msgTimestamp
-        msg.replyEx("MCBot v2.0.0-Alpha1\nPong! 机器人正常运行中~\n服务器ID: ${msg.extra.guildId}\n频道ID: ${msg.targetId}\n用户ID: ${msg.authorId}\n延迟: $netDelay ms")
+        msg.replyEx("MCBot v2.0.0-Alpha2\nPong! 机器人正常运行中~\n服务器ID: ${msg.extra.guildId}\n频道ID: ${msg.targetId}\n用户ID: ${msg.authorId}\n延迟: $netDelay ms")
     }
 
     @Bot.OnCommand("getuserid", aliases = ["获取用户ID"])
