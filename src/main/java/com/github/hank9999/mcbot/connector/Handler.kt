@@ -6,6 +6,7 @@ import com.github.hank9999.kook.utils.NamedThreadFactory
 import com.github.hank9999.mcbot.MCBot.kookApi
 import com.github.hank9999.mcbot.bot.Command.Companion.receiveCommand
 import com.github.hank9999.mcbot.bot.Status.Companion.receiveStatus
+import com.github.hank9999.mcbot.bot.Utils.Companion.createEx
 import com.github.hank9999.mcbot.bot.Utils.Companion.escape
 import com.github.hank9999.mcbot.connector.types.Receive
 import com.github.hank9999.mcbot.database.types.Token
@@ -63,7 +64,7 @@ class Handler {
                 kookApi.Message().create(channelId, log, MessageTypes.KMD)
             } catch (ex: Exception) {
                 logger.error(ex.stackTraceToString())
-                kookApi.Message().create(channelId, "**${name.escape()}**\n发送消息时发生错误, 请联系维护\n${ex.stackTraceToString()}", MessageTypes.KMD)
+                kookApi.Message().createEx(channelId, "**${name.escape()}**\n发送消息时发生错误, 请联系维护\n${ex.message}", MessageTypes.KMD)
             }
         }
     }
@@ -81,7 +82,7 @@ class Handler {
                 kookApi.Message().create(channelId, "\\[${name.escape()}\\] <$username> $chat", MessageTypes.KMD)
             } catch (ex: Exception) {
                 logger.error(ex.stackTraceToString())
-                kookApi.Message().create(channelId, "**${name.escape()}**\n发送消息时发生错误, 请联系维护\n${ex.stackTraceToString()}", MessageTypes.KMD)
+                kookApi.Message().createEx(channelId, "**${name.escape()}**\n发送消息时发生错误, 请联系维护\n${ex.message}", MessageTypes.KMD)
             }
         }
     }
@@ -99,7 +100,7 @@ class Handler {
                 kookApi.Message().create(channelId, "行为: 玩家执行指令\n服务器: ${name.escape()}\nID: $username\n$command", MessageTypes.KMD)
             } catch (ex: Exception) {
                 logger.error(ex.stackTraceToString())
-                kookApi.Message().create(channelId, "**${name.escape()}**\n发送消息时发生错误, 请联系维护\n${ex.stackTraceToString()}", MessageTypes.KMD)
+                kookApi.Message().createEx(channelId, "**${name.escape()}**\n发送消息时发生错误, 请联系维护\n${ex.message}", MessageTypes.KMD)
             }
         }
     }
@@ -116,7 +117,7 @@ class Handler {
                 kookApi.Message().create(channelId, "行为: Rcon执行指令\n服务器: ${name.escape()}\n$command", MessageTypes.KMD)
             } catch (ex: Exception) {
                 logger.error(ex.stackTraceToString())
-                kookApi.Message().create(channelId, "**${name.escape()}**\n发送消息时发生错误, 请联系维护\n${ex.stackTraceToString()}", MessageTypes.KMD)
+                kookApi.Message().createEx(channelId, "**${name.escape()}**\n发送消息时发生错误, 请联系维护\n${ex.message}", MessageTypes.KMD)
             }
         }
     }
@@ -133,7 +134,7 @@ class Handler {
                 kookApi.Message().create(channelId, "玩家 $username **登入** 服务器 ${name.escape()}", MessageTypes.KMD)
             } catch (ex: Exception) {
                 logger.error(ex.stackTraceToString())
-                kookApi.Message().create(channelId, "**${name.escape()}**\n发送消息时发生错误, 请联系维护\n${ex.stackTraceToString()}", MessageTypes.KMD)
+                kookApi.Message().createEx(channelId, "**${name.escape()}**\n发送消息时发生错误, 请联系维护\n${ex.message}", MessageTypes.KMD)
             }
         }
     }
@@ -150,7 +151,7 @@ class Handler {
                 kookApi.Message().create(channelId, "玩家 $username **退出** 服务器 ${name.escape()}", MessageTypes.KMD)
             } catch (ex: Exception) {
                 logger.error(ex.stackTraceToString())
-                kookApi.Message().create(channelId, "**${name.escape()}**\n发送消息时发生错误, 请联系维护\n${ex.stackTraceToString()}", MessageTypes.KMD)
+                kookApi.Message().createEx(channelId, "**${name.escape()}**\n发送消息时发生错误, 请联系维护\n${ex.message}", MessageTypes.KMD)
             }
         }
     }

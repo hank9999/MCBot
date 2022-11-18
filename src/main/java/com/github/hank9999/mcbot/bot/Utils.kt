@@ -68,10 +68,11 @@ class Utils {
             return try {
                 this.reply(content, type, nonce, tempTargetId)
             } catch (ex: Exception) {
-                logger.error("${ex.message}\n${ex.stackTraceToString()}")
+                logger.error(ex.stackTraceToString())
                 try {
                     this.reply("发生错误, 请稍后再试或联系维护\n${ex.message}")
-                } catch (_: Exception) {
+                } catch (ex2: Exception) {
+                    logger.error(ex2.stackTraceToString())
                     MessageCreate()
                 }
             }
@@ -81,7 +82,7 @@ class Utils {
             return try {
                 this.create(targetId, content, type, quote, nonce, tempTargetId)
             } catch (ex: Exception) {
-                logger.error("${ex.message}\n${ex.stackTraceToString()}")
+                logger.error(ex.stackTraceToString())
                 MessageCreate()
             }
         }
@@ -90,7 +91,7 @@ class Utils {
             return try {
                 this.delete(msgId)
             } catch (ex: Exception) {
-                logger.error("${ex.message}\n${ex.stackTraceToString()}")
+                logger.error(ex.stackTraceToString())
             }
         }
 
@@ -98,7 +99,7 @@ class Utils {
             return try {
                 this.update(msgId, content, quote, tempTargetId)
             } catch (ex: Exception) {
-                logger.error("${ex.message}\n${ex.stackTraceToString()}")
+                logger.error(ex.stackTraceToString())
             }
         }
 
