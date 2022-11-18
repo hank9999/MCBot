@@ -1,14 +1,20 @@
 package com.github.hank9999.mcbot.permission
 
+import com.github.hank9999.mcbot.database.DBCreate
 import com.github.hank9999.mcbot.database.DBRead.Companion.readPermission
 import com.github.hank9999.mcbot.database.DBUpdate
+import com.github.hank9999.mcbot.database.types.Permission
 import com.github.hank9999.mcbot.database.types.Token
 import com.github.hank9999.mcbot.permission.types.Status
 
 class PMAdd {
     companion object {
         suspend fun addAdmin(token: Token, users: List<String> = emptyList(), roles: List<Int> = emptyList()): Status {
-            val permission = readPermission(token) ?: return Status.NotFound
+            val permissionResult = readPermission(token)
+            val permission = permissionResult ?: Permission(token.token)
+            if (permissionResult == null) {
+                DBCreate.createPermission(permission)
+            }
             users.forEach { if (!permission.admins.users.contains(it)) {
                 permission.admins.users.add(it)
             } }
@@ -23,7 +29,11 @@ class PMAdd {
         }
 
         suspend fun addChat(token: Token, users: List<String> = emptyList(), roles: List<Int> = emptyList()): Status {
-            val permission = readPermission(token) ?: return Status.NotFound
+            val permissionResult = readPermission(token)
+            val permission = permissionResult ?: Permission(token.token)
+            if (permissionResult == null) {
+                DBCreate.createPermission(permission)
+            }
             users.forEach { if (!permission.chat.users.contains(it)) {
                 permission.chat.users.add(it)
             } }
@@ -38,7 +48,11 @@ class PMAdd {
         }
 
         suspend fun addStatus(token: Token, users: List<String> = emptyList(), roles: List<Int> = emptyList()): Status {
-            val permission = readPermission(token) ?: return Status.NotFound
+            val permissionResult = readPermission(token)
+            val permission = permissionResult ?: Permission(token.token)
+            if (permissionResult == null) {
+                DBCreate.createPermission(permission)
+            }
             users.forEach { if (!permission.status.users.contains(it)) {
                 permission.status.users.add(it)
             } }
@@ -53,7 +67,11 @@ class PMAdd {
         }
 
         suspend fun addCommand(token: Token, users: List<String> = emptyList(), roles: List<Int> = emptyList()): Status {
-            val permission = readPermission(token) ?: return Status.NotFound
+            val permissionResult = readPermission(token)
+            val permission = permissionResult ?: Permission(token.token)
+            if (permissionResult == null) {
+                DBCreate.createPermission(permission)
+            }
             users.forEach { if (!permission.command.users.contains(it)) {
                 permission.command.users.add(it)
             } }
