@@ -38,6 +38,7 @@ class Handler {
                 "RconCommand" -> sendRconCommand(data, token, name)
                 "status" -> receiveStatus(data, token, name)
                 "command" -> receiveCommand(data, token, name)
+                else -> {}
             }
         } catch (ex: Exception) {
             logger.error(ex.stackTraceToString())
