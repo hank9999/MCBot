@@ -43,6 +43,9 @@ class PMCheck {
 
         suspend fun checkAdmin(token: Token, user: User): Boolean {
             val permission = DBRead.readPermission(token) ?: return false
+            if (permission.admins.roles.contains(0)) {
+                return true
+            }
             return when {
                 permission.admins.users.contains(user.id) -> true
                 else -> (permission.admins.roles.toSet() intersect user.roles.toSet()).isNotEmpty()
@@ -51,6 +54,9 @@ class PMCheck {
 
         suspend fun checkChat(token: Token, user: User): Boolean {
             val permission = DBRead.readPermission(token) ?: return false
+            if (permission.chat.roles.contains(0)) {
+                return true
+            }
             return when {
                 permission.chat.users.contains(user.id) -> true
                 else -> (permission.chat.roles.toSet() intersect user.roles.toSet()).isNotEmpty()
@@ -59,6 +65,9 @@ class PMCheck {
 
         suspend fun checkStatus(token: Token, user: User): Boolean {
             val permission = DBRead.readPermission(token) ?: return false
+            if (permission.status.roles.contains(0)) {
+                return true
+            }
             return when {
                 permission.status.users.contains(user.id) -> true
                 else -> (permission.status.roles.toSet() intersect user.roles.toSet()).isNotEmpty()
@@ -67,6 +76,9 @@ class PMCheck {
 
         suspend fun checkCommand(token: Token, user: User): Boolean {
             val permission = DBRead.readPermission(token) ?: return false
+            if (permission.command.roles.contains(0)) {
+                return true
+            }
             return when {
                 permission.command.users.contains(user.id) -> true
                 else -> (permission.command.roles.toSet() intersect user.roles.toSet()).isNotEmpty()
