@@ -215,6 +215,9 @@ class Generators {
                     Element.Button(Type.Theme.INFO, Element.Text("查询服务器状态 - status"), "{\"type\":\"openPermStatus\"}", Type.Click.RETURN_VAL)
                 ),
                 Module.ActionGroup(
+                    Element.Button(Type.Theme.INFO, Element.Text("聊天 - chat"), "{\"type\":\"openPermChat\"}", Type.Click.RETURN_VAL)
+                ),
+                Module.ActionGroup(
                     Element.Button(Type.Theme.INFO, Element.Text("远程执行指令 - command"), "{\"type\":\"openPermCommand\"}", Type.Click.RETURN_VAL)
                 ),
                 Module.ActionGroup(
@@ -269,6 +272,75 @@ class Generators {
                             text = Element.Text(text, type = Type.Text.KMD),
                             mode = Type.SectionMode.RIGHT,
                             accessory = Element.Button(Type.Theme.SUCCESS, Element.Text("给予"), "{\"type\":\"permGive\", \"perm\": \"status\", \"role\": ${it.roleId}}", Type.Click.RETURN_VAL)
+                        )
+                    )
+                }
+                card.append(Module.Divider())
+            }
+            if (card.length() >= 48 && cardMessage.length() < 4) {
+                cardMessage.append(card)
+                card = Card()
+            }
+            if (clearUsed) {
+                if (card.length() == 50) {
+                    card.removeAt(49)
+                    card.removeAt(48)
+                } else if (card.length() == 49) {
+                    card.removeAt(48)
+                }
+                card.append(Module.Section(Element.Text("因卡片消息限制, 部分服务器信息无法发送")))
+            }
+            card.append(
+                Module.ActionGroup(
+                    Element.Button(Type.Theme.PRIMARY, Element.Text("返回权限主面板"), "{\"type\":\"openPerm\"}", Type.Click.RETURN_VAL),
+                    Element.Button(Type.Theme.WARNING, Element.Text("关闭"), "{\"type\":\"closePanel\"}", Type.Click.RETURN_VAL)
+                )
+            )
+            cardMessage.append(card)
+            return cardMessage
+        }
+
+        suspend fun genPermissionChatCard(token: Token): CardMessage {
+            val cardMessage = CardMessage()
+            var card = Card(
+                theme = Type.Theme.SECONDARY,
+                Module.Container(Element.Image(Banner.main), Element.Image(Banner.perm)),
+                Module.Header(Element.Text("权限 | 聊天 - chat")),
+                Module.Divider()
+            )
+            val roleList = MCBot.kookApi.GuildRole().list(token.guild)
+            var clearUsed = false
+            for (it in roleList) {
+                val chat = PMCheck.checkChat(token, it.roleId)
+                val chatText = when (chat) {
+                    true -> "权限: **有**"
+                    false -> "权限: **无**"
+                }
+                val role = if (it.roleId == 0) "@全体成员" else "(rol)${it.roleId}(rol)"
+                val text = "> $role\n$chatText\n\n"
+                if (card.length() + 2 > 50) {
+                    if (cardMessage.length() == 4) {
+                        card.clear()
+                        clearUsed = true
+                    } else {
+                        cardMessage.append(card)
+                        card = Card()
+                    }
+                }
+                if (chat) {
+                    card.append(
+                        Module.Section(
+                            text = Element.Text(text, type = Type.Text.KMD),
+                            mode = Type.SectionMode.RIGHT,
+                            accessory = Element.Button(Type.Theme.DANGER, Element.Text("移除"), "{\"type\":\"permRemove\", \"perm\": \"command\", \"role\": ${it.roleId}}", Type.Click.RETURN_VAL)
+                        )
+                    )
+                } else {
+                    card.append(
+                        Module.Section(
+                            text = Element.Text(text, type = Type.Text.KMD),
+                            mode = Type.SectionMode.RIGHT,
+                            accessory = Element.Button(Type.Theme.SUCCESS, Element.Text("给予"), "{\"type\":\"permGive\", \"perm\": \"command\", \"role\": ${it.roleId}}", Type.Click.RETURN_VAL)
                         )
                     )
                 }

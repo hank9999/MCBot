@@ -27,6 +27,7 @@ import com.github.hank9999.mcbot.bot.Generators.Companion.genFuncCard
 import com.github.hank9999.mcbot.bot.Generators.Companion.genInfoCard
 import com.github.hank9999.mcbot.bot.Generators.Companion.genPermissionAdminCard
 import com.github.hank9999.mcbot.bot.Generators.Companion.genPermissionCard
+import com.github.hank9999.mcbot.bot.Generators.Companion.genPermissionChatCard
 import com.github.hank9999.mcbot.bot.Generators.Companion.genPermissionCommandCard
 import com.github.hank9999.mcbot.bot.Generators.Companion.genPermissionStatusCard
 import com.github.hank9999.mcbot.bot.Generators.Companion.genStatusCard
@@ -36,6 +37,7 @@ import com.github.hank9999.mcbot.bot.Utils.Companion.deleteEx
 import com.github.hank9999.mcbot.bot.Utils.Companion.escape
 import com.github.hank9999.mcbot.bot.Utils.Companion.getParams
 import com.github.hank9999.mcbot.bot.Utils.Companion.getTokenAndCheckAdmin
+import com.github.hank9999.mcbot.bot.Utils.Companion.getTokenAndCheckChat
 import com.github.hank9999.mcbot.bot.Utils.Companion.getTokenAndCheckCommand
 import com.github.hank9999.mcbot.bot.Utils.Companion.getTokenAndCheckMaster
 import com.github.hank9999.mcbot.bot.Utils.Companion.getTokenAndCheckStatus
@@ -284,7 +286,7 @@ class Commands {
 
     @Bot.OnCommand("say", aliases = ["说", "发消息", "caht"])
     suspend fun say(msg: Message) {
-        val result = getTokenAndCheckCommand(msg.extra.guildId, msg.extra.author)
+        val result = getTokenAndCheckChat(msg.extra.guildId, msg.extra.author)
         if (!result.bool) {
             msg.replyEx(result.message)
             return
@@ -345,6 +347,7 @@ class Commands {
                 "openPermStatus" -> kookApi.Message().updateEx(msgId, genPermissionStatusCard(token))
                 "openPermCommand" -> kookApi.Message().updateEx(msgId, genPermissionCommandCard(token))
                 "openPermAdmin" -> kookApi.Message().updateEx(msgId, genPermissionAdminCard(token))
+                "openPermChat" -> kookApi.Message().updateEx(msgId, genPermissionChatCard(token))
                 "funcEnable" -> funcEnableButtonHandler(value["func"].String, token, channelId, msgId, user.id)
                 "funcDisable" -> funcDisableButtonHandler(value["func"].String, token, channelId, msgId, user.id)
                 "permRemove" -> permRemoveButtonHandler(value["perm"].String, value["role"].Int, token, channelId, msgId, user.id)

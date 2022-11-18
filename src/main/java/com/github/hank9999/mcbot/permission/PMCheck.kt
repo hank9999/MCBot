@@ -90,6 +90,11 @@ class PMCheck {
             return permission.status.roles.find { it == roleId } != null
         }
 
+        suspend fun checkChat(token: Token, roleId: Int): Boolean {
+            val permission = DBRead.readPermission(token) ?: return false
+            return permission.chat.roles.find { it == roleId } != null
+        }
+
         suspend fun checkCommand(token: Token, roleId: Int): Boolean {
             val permission = DBRead.readPermission(token) ?: return false
             return permission.command.roles.find { it == roleId } != null

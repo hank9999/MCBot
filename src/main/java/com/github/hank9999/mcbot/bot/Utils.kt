@@ -50,6 +50,14 @@ class Utils {
             return GetTokenAndCheckPermissionResult(true, token)
         }
 
+        suspend fun getTokenAndCheckChat(guildId: String, user: User): GetTokenAndCheckPermissionResult {
+            val token = DBRead.getTokenByGuild(guildId) ?: return GetTokenAndCheckPermissionResult(false, message = "未绑定 token")
+            if (!PMCheck.checkChat(token, user) && !PMCheck.checkAdmin(token, user) && !PMCheck.checkGuildMaster(token, user.id)) {
+                return GetTokenAndCheckPermissionResult(false, message = "你没有权限执行此操作")
+            }
+            return GetTokenAndCheckPermissionResult(true, token)
+        }
+
         suspend fun getTokenAndCheckCommand(guildId: String, user: User): GetTokenAndCheckPermissionResult {
             val token = DBRead.getTokenByGuild(guildId) ?: return GetTokenAndCheckPermissionResult(false, message = "未绑定 token")
             if (!PMCheck.checkCommand(token, user) && !PMCheck.checkAdmin(token, user) && !PMCheck.checkGuildMaster(token, user.id)) {
